@@ -1,0 +1,10 @@
+﻿
+@model CRUD.CustomerService.Customer
+@{
+    ViewBag.Title = "Create Customer";
+}
+
+<h2>Customer Form</h2>
+<form action="/Customer/Create" method="post">
+    @Html.Partial("_CustomerForm", Model)
+</form>

@@ -1,0 +1,28 @@
+﻿@model CRUD.CustomerService.Customer
+<input type="hidden" name="Id" value="@Model.Id" />
+
+<div class="form-group">
+    <label>Name</label>
+    <input type="text" name="Name" class="form-control" value="@Model.Name" placeholder="Enter Your Name" />
+    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+
+</div>
+
+<div class="form-group">
+    <lable>Email</lable>
+    <input type="email" name="Email" class="form-control" value="@Model.Email" placeholder="your@example.com" />
+</div>
+<div class="form-group">
+    <lable>Phone</lable>
+    <input type="text" name="Phone" class="form-control" value="@Model.Phone" placeholder="Enter Your Phone" />
+</div>
+<br />
+<div class="form-group">
+    <button type="submit" class="btn btn-primary" style="width:100px;">@(Model.Id == 0 ? "Save" : "Update")</button>
+</div>
+
+
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
