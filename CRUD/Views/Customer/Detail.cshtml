@@ -1,0 +1,46 @@
+﻿@model CRUD.CustomerService.Customer
+@{
+    ViewBag.Title = "Detail";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-5">
+
+            
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title">
+                        Customer Profile
+                    </h5>
+                </div>
+
+                <div class="card-body">
+                    
+                    <h3 class="text-center text-primary mb-2">@Model.Name</h3>
+
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <th scope="row" class="text-muted text-right">Customer ID :</th>
+                                <td>@Model.Id</td>
+                            </tr>
+                            <tr>,
+                                <th scope="row" class="text-muted text-right">Email :</th>
+                                <td>@Model.Email</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-muted text-right">Phone :</th>
+                                <td>@Model.Phone</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                 
+            </div>
+           
+        </div>
+    </div>
+</div>
+ 

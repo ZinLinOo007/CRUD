@@ -65,6 +65,15 @@ namespace CRUD.Controllers
             return View(customer);
         }
 
+        [HttpGet]
+        public ActionResult Detail(int id)
+        {
+            var customer = client.GetCustomerById(id);
+            if (customer == null)
+                return HttpNotFound();
+            return View(customer);
+        }
+
         [HttpPost]
         public ActionResult Delete(int id)
         {
