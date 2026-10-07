@@ -151,6 +151,7 @@
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CustomerServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Connected Services\CustomerService\CRUD.CustomerService.Customer.datasource">

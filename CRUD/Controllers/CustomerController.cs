@@ -6,19 +6,20 @@ using System.Web;
 using System.Web.Mvc;
 using System.ServiceModel;
 using CRUD.CustomerService;
+using CRUD.Services;
 
 namespace CRUD.Controllers
 {
     public class CustomerController : Controller
     {
-        private CustomerServiceClient client;
+        private CustomerServices _customerService;
         public CustomerController()
         {
-            this.client = new CustomerServiceClient();
+            this._customerService = new CustomerServices();
         }
         public ActionResult Index()
         {
-            var customer = client.GetCustomers();
+            var customer = _customerService.GetAllCustomers();
             return View(customer);
             
         }
@@ -35,7 +36,7 @@ namespace CRUD.Controllers
             
             if (ModelState.IsValid)
             {
-                client.AddCustomer(customer);
+                _customerService.AddCustomer(customer);
                 return RedirectToAction("Index");
             }
             return View(customer);
@@ -45,7 +46,7 @@ namespace CRUD.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var customer = client.GetCustomerById(id);
+            var customer = _customerService.GetCustomerById(id);
 
             if (customer == null)
                 return HttpNotFound();
@@ -59,7 +60,7 @@ namespace CRUD.Controllers
              
             if (ModelState.IsValid) 
             {
-                client.UpdateCustomer(customer);
+                _customerService.UpdateCustomer(customer);
                 return RedirectToAction("Index");
             }
             return View(customer);
@@ -68,7 +69,7 @@ namespace CRUD.Controllers
         [HttpGet]
         public ActionResult Detail(int id)
         {
-            var customer = client.GetCustomerById(id);
+            var customer = _customerService.GetCustomerById(id);
             if (customer == null)
                 return HttpNotFound();
             return View(customer);
@@ -78,7 +79,7 @@ namespace CRUD.Controllers
         public ActionResult Delete(int id)
         {
             
-            bool isDeleted =  client.DeleteCustomer(id);
+            bool isDeleted = _customerService.DeleteCustomer(id);
             return Json(new { success = isDeleted });
         }
     }
