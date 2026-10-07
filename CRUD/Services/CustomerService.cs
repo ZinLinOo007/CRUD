@@ -1,4 +1,5 @@
 ﻿using CRUD.CustomerService;
+using CRUD.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,10 +7,10 @@ using System.Web;
 
 namespace CRUD.Services
 {
-    public class CustomerServices
+    public class CustomerService
     {
         private CustomerServiceClient _client;
-        public CustomerServices()
+        public CustomerService()
         {
             _client = new CustomerServiceClient();
         }

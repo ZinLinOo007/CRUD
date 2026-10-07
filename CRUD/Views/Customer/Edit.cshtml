@@ -1,10 +1,35 @@
-﻿@model CRUD.CustomerService.Customer
+﻿@model CRUD.Models.CustomerEdit
 @{
     ViewBag.Title = "Edit";
 }
 
 <h2>Edit Form</h2>
 <form action="/Customer/Edit" method="post">
-    @Html.Partial("_CustomerForm", Model)
+    <input type="hidden" name="Id" value="@Model.Id" />
+
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" name="Name" class="form-control" value="@Model.Name" placeholder="Enter Your Name" />
+        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+
+    </div>
+
+    <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="Email" class="form-control" value="@Model.Email" placeholder="your@example.com" />
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label>Phone</label>
+        <input type="text" name="Phone" class="form-control" value="@Model.Phone" placeholder="Enter Your Phone" />
+        @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+    </div>
+    <br />
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" style="width:100px;">Update</button>
+    </div>
 </form>
 
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

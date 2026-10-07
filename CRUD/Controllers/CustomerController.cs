@@ -4,42 +4,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.ServiceModel;
+using CRUD.Models;
 using CRUD.CustomerService;
-using CRUD.Services;
 
 namespace CRUD.Controllers
 {
     public class CustomerController : Controller
     {
-        private CustomerServices _customerService;
+        private Services.CustomerService _customerService;
         public CustomerController()
         {
-            this._customerService = new CustomerServices();
+            this._customerService = new Services.CustomerService();
         }
         public ActionResult Index()
         {
             var customer = _customerService.GetAllCustomers();
-            return View(customer);
+            var customerList = customer.Select(c => new CustomerList
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Email = c.Email,
+                Phone = c.Phone
+            }).ToList();
+            return View(customerList);
             
         }
 
         [HttpGet]
         public ActionResult Create()
         {
-            return View(new Customer());
+            return View(new CustomerCreate());
         }
 
         [HttpPost]
-        public ActionResult Create(Customer customer) {
+        public ActionResult Create(CustomerCreate customerCreate) {
 
             
             if (ModelState.IsValid)
             {
+                var customer = new Customer
+                {
+                    Name = customerCreate.Name,
+                    Email = customerCreate.Email,
+                    Phone = customerCreate.Phone
+                };
                 _customerService.AddCustomer(customer);
                 return RedirectToAction("Index");
             }
-            return View(customer);
+            return View(customerCreate);
          
         }
 
@@ -50,20 +62,34 @@ namespace CRUD.Controllers
 
             if (customer == null)
                 return HttpNotFound();
-            return View(customer);
+            var customerEdit = new CustomerEdit
+            {
+                Id = customer.Id,
+                Name = customer.Name,
+                Email = customer.Email,
+                Phone = customer.Phone
+            };
+            return View(customerEdit);
 
         }
 
         [HttpPost]
-        public ActionResult Edit(Customer customer)
+        public ActionResult Edit(CustomerEdit customerEdit)
         {
              
             if (ModelState.IsValid) 
             {
+                var customer = new Customer
+                {
+                    Id = customerEdit.Id,
+                    Name = customerEdit.Name,
+                    Email = customerEdit.Email,
+                    Phone = customerEdit.Phone
+                };
                 _customerService.UpdateCustomer(customer);
                 return RedirectToAction("Index");
             }
-            return View(customer);
+            return View(customerEdit);
         }
 
         [HttpGet]
@@ -72,7 +98,14 @@ namespace CRUD.Controllers
             var customer = _customerService.GetCustomerById(id);
             if (customer == null)
                 return HttpNotFound();
-            return View(customer);
+            var customerDetail = new CustomerDetail
+            {
+                Id = customer.Id,
+                Name = customer.Name,
+                Email = customer.Email,
+                Phone = customer.Phone
+            };
+            return View(customerDetail);
         }
 
         [HttpPost]
