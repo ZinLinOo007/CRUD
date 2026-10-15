@@ -7,7 +7,7 @@ using System.Web;
 
 namespace CRUD.Services
 {
-    public class CustomerService
+    public class CustomerService : ICustomerService
     {
         private CustomerServiceClient _client;
         public CustomerService()
@@ -37,6 +37,8 @@ namespace CRUD.Services
         public bool DeleteCustomer(int id)
         {
             return _client.DeleteCustomer(id);
-        }   
+        }
+
+        
     }
 }

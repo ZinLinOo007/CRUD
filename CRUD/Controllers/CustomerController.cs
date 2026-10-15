@@ -5,27 +5,27 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CRUD.Models;
-using CRUD.CustomerService;
+using CRUD.Mappings;
+using CRUD.Services;
 
 namespace CRUD.Controllers
 {
     public class CustomerController : Controller
     {
-        private Services.CustomerService _customerService;
+        private ICustomerService _customerService;
+
         public CustomerController()
         {
-            this._customerService = new Services.CustomerService();
+            _customerService = new Services.CustomerService();
+        }
+        public CustomerController(ICustomerService customerService)
+        {
+            _customerService = customerService;
         }
         public ActionResult Index()
         {
-            var customer = _customerService.GetAllCustomers();
-            var customerList = customer.Select(c => new CustomerList
-            {
-                Id = c.Id,
-                Name = c.Name,
-                Email = c.Email,
-                Phone = c.Phone
-            }).ToList();
+            var customers = _customerService.GetAllCustomers();
+            var customerList =  CustomerMapping.MapToCustomerList(customers);
             return View(customerList);
             
         }
@@ -42,12 +42,7 @@ namespace CRUD.Controllers
             
             if (ModelState.IsValid)
             {
-                var customer = new Customer
-                {
-                    Name = customerCreate.Name,
-                    Email = customerCreate.Email,
-                    Phone = customerCreate.Phone
-                };
+                var customer = CustomerMapping.MapToCustomer(customerCreate);
                 _customerService.AddCustomer(customer);
                 return RedirectToAction("Index");
             }
@@ -62,13 +57,7 @@ namespace CRUD.Controllers
 
             if (customer == null)
                 return HttpNotFound();
-            var customerEdit = new CustomerEdit
-            {
-                Id = customer.Id,
-                Name = customer.Name,
-                Email = customer.Email,
-                Phone = customer.Phone
-            };
+            var customerEdit = CustomerMapping.MapToCustomerEdit(customer);
             return View(customerEdit);
 
         }
@@ -79,13 +68,8 @@ namespace CRUD.Controllers
              
             if (ModelState.IsValid) 
             {
-                var customer = new Customer
-                {
-                    Id = customerEdit.Id,
-                    Name = customerEdit.Name,
-                    Email = customerEdit.Email,
-                    Phone = customerEdit.Phone
-                };
+
+                var customer = CustomerMapping.MapToCustomer(customerEdit);
                 _customerService.UpdateCustomer(customer);
                 return RedirectToAction("Index");
             }
@@ -98,13 +82,8 @@ namespace CRUD.Controllers
             var customer = _customerService.GetCustomerById(id);
             if (customer == null)
                 return HttpNotFound();
-            var customerDetail = new CustomerDetail
-            {
-                Id = customer.Id,
-                Name = customer.Name,
-                Email = customer.Email,
-                Phone = customer.Phone
-            };
+           
+            var customerDetail = CustomerMapping.MapToCustomerDetail(customer);
             return View(customerDetail);
         }
 

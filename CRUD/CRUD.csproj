@@ -139,12 +139,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Mappings\CustomerMapping.cs" />
     <Compile Include="Models\CustomerCreate.cs" />
     <Compile Include="Models\CustomerDetail.cs" />
     <Compile Include="Models\CustomerEdit.cs" />
     <Compile Include="Models\CustomerList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CustomerService.cs" />
+    <Compile Include="Services\ICustomerService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Connected Services\CustomerService\CRUD.CustomerService.Customer.datasource">
